@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class ArticleController extends Controller {
     private Scanner sc;
-    private  List<Article> articles;
+    private List<Article> articles;
     private String cmd;
 
     private int lastArticleId = 3;
@@ -134,15 +134,36 @@ public class ArticleController extends Controller {
 
     private void doModify() {
         System.out.println("==게시글 수정==");
+        String[] cmdBits = cmd.split(" ");
+        int id = Integer.parseInt(cmdBits[1]);
+        Article foundArticle = getArticleById(id);
+        if (foundArticle == null) {
+            System.out.print("존재하지 않습니다");
+            return;
+        }
+        if(foundArticle.getId() != id) {
+            System.out.println("로그인 아이디만 수정 가능");
+            return;
+        }
+
+        System.out.print("기존 제목" + getArticleById(id).getTitle());
+        System.out.println("기존 내용" + getArticleById(id).getBody());
+
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
-        Article foundArticle = getArticleById(id);
-
-        if (foundArticle == null) {
-            System.out.println("해당 게시글은 없습니다");
+//        Article foundArticle = getArticleById(id);
+//        Article articleExist = getArticleById(id);
+        if (foundArticle.getId() == lastArticleId) {
+            System.out.println("게시글 수정");
             return;
+
         }
+
+//        if (foundArticle == null) {
+//            System.out.println("해당 게시글은 없습니다");
+//            return;
+//        }
         System.out.println("기존 title : " + foundArticle.getTitle());
         System.out.println("기존 body : " + foundArticle.getBody());
         System.out.print("새 제목 : ");
@@ -166,6 +187,7 @@ public class ArticleController extends Controller {
         }
         return null;
     }
+
 
     /**
      * 게시글 테스트 데이터 생성
