@@ -1,11 +1,11 @@
 package org.example.dto;
 
-public class Article {
-    private int id;
-    private String regDate;
-    private String updateDate;
+public class Article extends Dto{
+
     private String title;
     private String body;
+
+    private String member;
 
     public Article(int id, String regDate, String updateDate, String title, String body) {
         this.id = id;
